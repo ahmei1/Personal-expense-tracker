@@ -18,17 +18,21 @@ The implementation process, technical decisions, and development notes are docum
 
 ## Technology Stack
 
-| Area | Technologies |
-|---|---|
-| Frontend | React, Tailwind CSS |
-| Backend | Node.js, Express |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| Authentication | JWT, bcrypt |
-| Validation | Zod |
-| HTTP Client | Axios |
+| Area           | Technologies        |
+| -------------- | ------------------- |
+| Frontend       | React, Tailwind CSS |
+| Backend        | Node.js, Express    |
+| Database       | PostgreSQL          |
+| ORM            | Prisma              |
+| Authentication | JWT, bcrypt         |
+| Validation     | Zod                 |
+| HTTP Client    | Axios               |
 
-**Planned deployment:** Vercel for the frontend and Render for the backend API.
+## Live Demo
+
+- **Frontend:** https://personal-expense-tracker-zeta-seven.vercel.app/
+- **Backend API:** https://personal-expense-tracker-k9i9.onrender.com/
+- **GitHub Repository:** https://github.com/ahmei1/Personal-expense-tracker
 
 ## Security
 
@@ -81,22 +85,22 @@ All endpoints use the `/api` prefix.
 
 ### Authentication
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/signup` | Register a new user |
-| POST | `/api/auth/login` | Authenticate and set the login cookie |
-| POST | `/api/auth/logout` | Log out and clear the cookie |
-| GET | `/api/auth/me` | Retrieve the authenticated user |
+| Method | Endpoint           | Description                           |
+| ------ | ------------------ | ------------------------------------- |
+| POST   | `/api/auth/signup` | Register a new user                   |
+| POST   | `/api/auth/login`  | Authenticate and set the login cookie |
+| POST   | `/api/auth/logout` | Log out and clear the cookie          |
+| GET    | `/api/auth/me`     | Retrieve the authenticated user       |
 
 ### Expenses
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/expenses` | Retrieve the user's expenses |
-| POST | `/api/expenses` | Create an expense |
-| PUT | `/api/expenses/:id` | Update an expense |
-| DELETE | `/api/expenses/:id` | Delete an expense |
-| GET | `/api/expenses/summary?month=YYYY-MM` | Retrieve monthly totals grouped by category |
+| Method | Endpoint                              | Description                                 |
+| ------ | ------------------------------------- | ------------------------------------------- |
+| GET    | `/api/expenses`                       | Retrieve the user's expenses                |
+| POST   | `/api/expenses`                       | Create an expense                           |
+| PUT    | `/api/expenses/:id`                   | Update an expense                           |
+| DELETE | `/api/expenses/:id`                   | Delete an expense                           |
+| GET    | `/api/expenses/summary?month=YYYY-MM` | Retrieve monthly totals grouped by category |
 
 **Note:** Expense endpoints require authentication. Users can only access expenses belonging to their own accounts.
 
@@ -122,7 +126,6 @@ cd personal-expense-tracker
 ### 2. Set up the database
 
 Create a PostgreSQL database named: `expense_tracker`
-
 
 Make sure your PostgreSQL user has permission to access the database and run migrations.
 
@@ -194,11 +197,25 @@ Open the application at:
 
 Create an account and sign in to start managing your expenses.
 
+## Testing
+
+The application was manually tested to verify:
+
+- User registration, login, and logout.
+- Protected routes and authentication.
+- Creating, editing, and deleting expenses.
+- Filtering expenses by category and month.
+- Monthly summaries and category charts.
+- Data isolation between user accounts.
+- Responsive behavior across different screen sizes.
+
 ## AI Assistance
 
-AI tools were used during development to assist with understanding technical concepts, troubleshooting errors, reviewing implementation decisions, and improving the development process.
+AI tools were used to assist with user interface design and visual improvements.
 
-The implementation and technical decisions are documented in [`steps.md`](./steps.md).
+The frontend and backend functionality was implemented and manually tested by the developer. AI assistance was also used where appropriate during development and troubleshooting.
+
+The development process and technical decisions are documented in [steps.md](./steps.md).
 
 ## Future Improvements
 
@@ -206,11 +223,10 @@ Potential improvements include:
 
 - Expense search.
 - Pagination for larger expense lists.
-- Spending charts and visual reports.
 - Automated backend and frontend tests.
 - Production deployment.
 
-*Note: i have build frontend and backend features and tested them by myself, i used AI for designing the user interface so i can focus on the main features and make sure they are working effeciently.
+\*Note: i have build frontend and backend features and tested them by myself, i used AI for designing the user interface so i can focus on the main features and make sure they are working effeciently.
 
 ## Author
 
