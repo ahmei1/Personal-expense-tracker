@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://ahmei1-expense-api.onrender.com/api/:path*"
+      "destination": "https://personal-expense-tracker-k9i9.onrender.com/api/:path*"
     }
   ]
 }
