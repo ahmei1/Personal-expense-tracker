@@ -20,7 +20,7 @@ services:
           name: personal-expense-tracker-db
           property: connectionString
       - key: CLIENT_URL
-        sync: false
+        value: https://personal-expense-tracker-zeta-seven.vercel.app
 
 databases:
   - name: personal-expense-tracker-db

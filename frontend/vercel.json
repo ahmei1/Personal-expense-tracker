@@ -4,6 +4,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://personal-expense-tracker-k9i9.onrender.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

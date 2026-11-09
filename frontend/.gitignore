@@ -34,3 +34,5 @@ cookies.txt
 
 # Coverage reports
 coverage/
+
+.vercel
