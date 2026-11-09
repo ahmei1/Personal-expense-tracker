@@ -32,6 +32,8 @@ The implementation process, technical decisions, and development notes are docum
 
 - **Frontend:** https://personal-expense-tracker-zeta-seven.vercel.app/
 - **Backend API:** https://personal-expense-tracker-k9i9.onrender.com/
+
+The hosted frontend calls `/api` on its own domain. Vercel forwards those requests to the backend, so signup and the login cookie stay on the frontend domain.
 - **GitHub Repository:** https://github.com/ahmei1/Personal-expense-tracker
 
 ## Security

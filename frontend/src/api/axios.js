@@ -1,20 +1,27 @@
 import axios from "axios";
 
-const configured = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const localHosts = new Set(["localhost", "127.0.0.1"]);
 
-function resolveApiBase(value) {
-  if (value.startsWith("/")) {
-    return value.replace(/\/$/, "");
+function resolveApiBase() {
+  const pageHost = window.location.hostname;
+
+  // The hosted app calls /api on its own domain. Vercel proxies that path to
+  // the API, so the login cookie is first-party and signup is not blocked by CORS.
+  if (!localHosts.has(pageHost)) {
+    return "/api";
   }
 
-  const apiUrl = new URL(value);
-  const pageHost = window.location.hostname;
-  const localHosts = new Set(["localhost", "127.0.0.1"]);
+  const configured = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+  if (configured.startsWith("/")) {
+    return configured.replace(/\/$/, "");
+  }
+
+  const apiUrl = new URL(configured);
 
   // Local dev may be opened as localhost or 127.0.0.1. Keep the API on that
-  // same host so the login cookie is stored and sent. Production uses either
-  // a relative /api path (proxied by Vercel) or the configured API host.
-  if (localHosts.has(pageHost) && localHosts.has(apiUrl.hostname)) {
+  // same host so the login cookie is stored and sent.
+  if (localHosts.has(apiUrl.hostname)) {
     apiUrl.hostname = pageHost;
   }
 
@@ -22,7 +29,7 @@ function resolveApiBase(value) {
 }
 
 const api = axios.create({
-  baseURL: resolveApiBase(configured),
+  baseURL: resolveApiBase(),
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
