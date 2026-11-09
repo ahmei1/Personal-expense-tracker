@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import api from "../api/axios";
 import { dateOnly, todayString } from "../utils/date";
 
@@ -11,7 +12,7 @@ const getInitialFormData = () => ({
 });
 
 const fieldClass =
-  "w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100";
+  "w-full rounded-lg border border-ink/15 bg-cream px-4 py-3 text-ink outline-none placeholder:text-ink/60 focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember";
 
 const ExpenseForm = ({
   onExpenseAdded,
@@ -99,25 +100,25 @@ const ExpenseForm = ({
   };
 
   return (
-    <section id="expense-form" className="scroll-mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <h2 className="text-lg font-semibold text-slate-900">
+    <section id="expense-form" className="scroll-mt-6 rounded-2xl bg-sand p-6 text-ink">
+      <h2 className="text-lg font-semibold">
         {existingExpense ? "Edit expense" : "Add expense"}
       </h2>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-1 text-sm">
         {existingExpense
           ? "Update the fields, then save."
           : "Fill in the details of what you spent."}
       </p>
 
       {error && (
-        <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <p className="mt-4 rounded-lg bg-ink p-3 text-sm text-cream">
           {error}
         </p>
       )}
 
       <form onSubmit={handleSubmit} className="mt-5 space-y-4">
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
+          <label className="mb-2 block text-sm font-medium text-ink">
             Title
           </label>
           <input
@@ -132,7 +133,7 @@ const ExpenseForm = ({
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
+          <label className="mb-2 block text-sm font-medium text-ink">
             Description
           </label>
           <textarea
@@ -147,7 +148,7 @@ const ExpenseForm = ({
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-ink">
               Amount
             </label>
             <input
@@ -164,7 +165,7 @@ const ExpenseForm = ({
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-ink">
               Date
             </label>
             <input
@@ -179,7 +180,7 @@ const ExpenseForm = ({
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
+          <label className="mb-2 block text-sm font-medium text-ink">
             Category
           </label>
           <select
@@ -202,24 +203,25 @@ const ExpenseForm = ({
         </div>
 
         <div className="flex gap-3">
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
-            className="flex-1 cursor-pointer rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            whileTap={{ scale: 0.98 }}
+            className="flex-1 cursor-pointer rounded-lg bg-ember px-4 py-3 font-medium text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading
               ? "Saving..."
               : existingExpense
                 ? "Update expense"
                 : "Add expense"}
-          </button>
+          </motion.button>
 
           {existingExpense && (
             <button
               type="button"
               onClick={handleCancel}
               disabled={loading}
-              className="cursor-pointer rounded-lg bg-slate-100 px-5 py-3 font-medium text-slate-700 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-60"
+              className="cursor-pointer rounded-lg bg-cream px-5 py-3 font-medium text-ink transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember disabled:cursor-not-allowed disabled:opacity-60"
             >
               Cancel
             </button>

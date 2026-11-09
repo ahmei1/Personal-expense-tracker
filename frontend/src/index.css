@@ -1,6 +1,23 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #222222;
+  --color-ember: #fa8112;
+  --color-sand: #f5e7c6;
+  --color-cream: #faf3e1;
+}
+
+html {
+  color-scheme: dark;
+}
+
 body {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #222222;
+  color: #faf3e1;
+}
+
+input,
+select,
+textarea {
+  color-scheme: light;
 }

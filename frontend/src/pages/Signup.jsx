@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -47,21 +48,28 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <p className="text-sm font-medium text-blue-700">Expense Tracker</p>
-        <h1 className="mt-2 text-3xl font-bold text-slate-900">Create account</h1>
-        <p className="mt-2 text-slate-500">Start managing your expenses today</p>
+    <div className="flex min-h-screen items-center justify-center bg-ink px-4 py-10 text-cream">
+      <motion.div
+        className="w-full max-w-md rounded-2xl bg-sand p-8 text-ink"
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Link to="/" className="text-sm font-medium text-ember">
+          Expense Tracker
+        </Link>
+        <h1 className="mt-2 text-3xl font-bold">Create account</h1>
+        <p className="mt-2">Start managing your expenses today</p>
 
         {error && (
-          <div className="mt-5 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <div className="mt-5 rounded-lg bg-ink p-3 text-sm text-cream">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-ink">
               Full name
             </label>
             <input
@@ -72,12 +80,12 @@ const Signup = () => {
               placeholder="Your name"
               required
               minLength={2}
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-lg border border-ink/15 bg-cream px-4 py-3 text-ink outline-none placeholder:text-ink/60 focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-ink">
               Email
             </label>
             <input
@@ -87,12 +95,12 @@ const Signup = () => {
               onChange={handleChange}
               placeholder="you@example.com"
               required
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-lg border border-ink/15 bg-cream px-4 py-3 text-ink outline-none placeholder:text-ink/60 focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-ink">
               Password
             </label>
             <input
@@ -103,29 +111,30 @@ const Signup = () => {
               placeholder="At least 8 characters"
               required
               minLength={8}
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-lg border border-ink/15 bg-cream px-4 py-3 text-ink outline-none placeholder:text-ink/60 focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember"
             />
           </div>
 
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
-            className="w-full cursor-pointer rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            whileTap={{ scale: 0.98 }}
+            className="w-full cursor-pointer rounded-lg bg-ember py-3 font-semibold text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Creating account..." : "Create account"}
-          </button>
+          </motion.button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="mt-6 text-center text-sm">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold text-blue-600 hover:underline"
+            className="font-semibold text-ember hover:underline"
           >
             Sign in
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

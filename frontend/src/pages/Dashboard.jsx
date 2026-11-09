@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 import ExpenseForm from "../components/ExpenseForm";
@@ -113,41 +115,64 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-ink text-cream">
       <div className="mx-auto max-w-3xl px-4 py-8">
-        <header className="flex flex-wrap items-center justify-between gap-4">
+        <motion.header
+          className="flex flex-wrap items-center justify-between gap-4"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div>
-            <p className="text-sm font-medium text-blue-700">Personal</p>
-            <h1 className="text-2xl font-bold text-slate-900">
+            <Link to="/" className="text-sm font-medium text-ember">
+              Personal
+            </Link>
+            <h1 className="text-2xl font-bold text-cream">
               Expense Tracker
             </h1>
-            <p className="mt-1 text-slate-600">Welcome, {user?.name}</p>
+            <p className="mt-1 text-sand">Welcome, {user?.name}</p>
           </div>
 
-          <button
+          <motion.button
             onClick={logout}
-            className="cursor-pointer rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-red-600 shadow-sm ring-1 ring-slate-200 transition hover:bg-red-50"
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer rounded-lg border border-ember bg-ink px-4 py-2.5 text-sm font-medium text-cream transition hover:bg-ember hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
           >
             Logout
-          </button>
-        </header>
+          </motion.button>
+        </motion.header>
 
-        <div className="mt-6 space-y-6">
-          <MonthlySummary refreshKey={summaryVersion} />
+        <motion.div
+          className="mt-6 space-y-6"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
+          <motion.div variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}>
+            <MonthlySummary refreshKey={summaryVersion} />
+          </motion.div>
 
-          <ExpenseForm
-            existingExpense={editingExpense}
-            onExpenseAdded={handleExpenseAdded}
-            onExpenseUpdated={handleExpenseUpdated}
-          />
+          <motion.div variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}>
+            <ExpenseForm
+              existingExpense={editingExpense}
+              onExpenseAdded={handleExpenseAdded}
+              onExpenseUpdated={handleExpenseUpdated}
+            />
+          </motion.div>
 
-          <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <motion.section
+            variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+            className="rounded-2xl bg-sand p-6 text-ink"
+          >
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold">
                   Expenses
                 </h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm">
                   {filteredExpenses.length} shown
                 </p>
               </div>
@@ -158,7 +183,7 @@ const Dashboard = () => {
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
                 aria-label="Filter by category"
-                className="rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="rounded-lg border border-ink/15 bg-cream px-3 py-2.5 text-ink outline-none focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember"
               >
                 <option value="All">All categories</option>
                 <option value="Food">Food</option>
@@ -176,7 +201,7 @@ const Dashboard = () => {
                 value={filterMonth}
                 onChange={(e) => setFilterMonth(e.target.value)}
                 aria-label="Filter by month"
-                className="rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="rounded-lg border border-ink/15 bg-cream px-3 py-2.5 text-ink outline-none focus-visible:border-ember focus-visible:ring-2 focus-visible:ring-ember"
               />
 
               <button
@@ -184,24 +209,24 @@ const Dashboard = () => {
                   setFilterCategory("All");
                   setFilterMonth("");
                 }}
-                className="cursor-pointer rounded-lg bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-200"
+                className="cursor-pointer rounded-lg bg-cream px-4 py-2.5 text-sm font-medium text-ink transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
               >
                 Clear filters
               </button>
             </div>
 
             {loading && (
-              <p className="mt-6 text-sm text-slate-500">Loading expenses...</p>
+              <p className="mt-6 text-sm">Loading expenses...</p>
             )}
 
             {error && (
-              <p className="mt-6 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+              <p className="mt-6 rounded-lg bg-ink p-3 text-sm text-cream">
                 {error}
               </p>
             )}
 
             {!loading && !error && expenses.length === 0 && (
-              <p className="mt-6 text-sm text-slate-500">
+              <p className="mt-6 text-sm">
                 No expenses yet. Start by adding your first expense.
               </p>
             )}
@@ -210,61 +235,70 @@ const Dashboard = () => {
               !error &&
               expenses.length > 0 &&
               filteredExpenses.length === 0 && (
-                <p className="mt-6 text-sm text-slate-500">
+                <p className="mt-6 text-sm">
                   No expenses match these filters.
                 </p>
               )}
 
             {!loading && filteredExpenses.length > 0 && (
               <div className="mt-6 space-y-3">
+                <AnimatePresence>
                 {filteredExpenses.map((expense) => (
-                  <article
+                  <motion.article
                     key={expense.id}
-                    className="rounded-xl border border-slate-200 p-4"
+                    layout
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.25 }}
+                    className="rounded-xl bg-cream p-4"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <h3 className="font-semibold text-slate-900">
+                        <h3 className="font-semibold">
                           {expense.title}
                         </h3>
-                        <p className="mt-1 text-sm text-slate-500">
-                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                        <p className="mt-1 text-sm">
+                          <span className="rounded-full bg-sand px-2 py-0.5 text-xs font-medium text-ink">
                             {expense.category}
                           </span>
                           <span className="ml-2">{showDate(expense.date)}</span>
                         </p>
                         {expense.description && (
-                          <p className="mt-2 text-sm text-slate-600">
+                          <p className="mt-2 text-sm">
                             {expense.description}
                           </p>
                         )}
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <p className="text-lg font-semibold tabular-nums text-slate-900">
+                        <p className="text-lg font-semibold tabular-nums">
                           {Number(expense.amount).toFixed(2)}
                         </p>
-                        <button
+                        <motion.button
                           onClick={() => startEdit(expense)}
-                          className="cursor-pointer rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100"
+                          whileTap={{ scale: 0.97 }}
+                          className="cursor-pointer rounded-lg bg-sand px-3 py-2 text-sm font-medium text-ink transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
                         >
                           Edit
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
                           onClick={() => handleDeleteExpense(expense.id)}
+                          whileTap={{ scale: 0.97 }}
                           disabled={Boolean(deletingId)}
-                          className="cursor-pointer rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+                          className="cursor-pointer rounded-lg bg-ember px-3 py-2 text-sm font-medium text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           {deletingId === expense.id ? "Deleting..." : "Delete"}
-                        </button>
+                        </motion.button>
                       </div>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
+                </AnimatePresence>
               </div>
             )}
-          </section>
-        </div>
+          </motion.section>
+        </motion.div>
       </div>
     </div>
   );
